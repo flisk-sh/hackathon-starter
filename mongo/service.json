@@ -1,0 +1,10 @@
+{
+  "$schema": "https://flisk.sh/schema.service.json",
+  "schemaVersion": 1,
+  "appName": "mongo",
+  "appType": "bring-your-own",
+  "image": "mongo:8",
+  "port": 27017,
+  "healthCheck": { "command": ["mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"] },
+  "volumes": [{ "source": "mongo", "target": "/data/db", "name": "hackathon_starter_mongo" }]
+}

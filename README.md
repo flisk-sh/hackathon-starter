@@ -125,6 +125,8 @@ I also tried to make it as **generic** and **reusable** as possible to cover mos
 
 **Note:** If you are new to Node or Express, you may find [Node.js & Express From Scratch series](https://www.youtube.com/watch?v=Ad2ngx6CT0M&list=PLillGF-RfqbYRpji8t4SxUkMxfowG4Kqp&index=3) helpful for learning the basics of Node and Express. Alternatively, here is another great tutorial for complete beginners - [Getting Started With Node.js, Express, MongoDB](https://www.freecodecamp.org/news/build-a-restful-api-using-node-express-and-mongodb/).
 
+> **Flisk fork:** this copy adds an optional one-command start (`npx @flisk-sh/flisk up`) that runs MongoDB in Docker and the app with live reload. See [FLISK.md](FLISK.md). The upstream steps below are unchanged.
+
 ## Getting Started
 
 **Step 1:** The easiest way to get started is to clone the repository:

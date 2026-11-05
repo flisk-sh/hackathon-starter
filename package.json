@@ -23,6 +23,7 @@
     "test:e2e:live": "playwright test --config=test/playwright.config.js --project=chromium",
     "test:e2e:replay": "playwright test --config=test/playwright.config.js --project=chromium-replay",
     "test:e2e:custom": "playwright test --config=test/playwright.config.js",
+    "test:e2e:flisk": "playwright test --config=test/flisk/playwright.flisk.config.js",
     "pretest:e2e:live": "npx playwright install chromium",
     "pretest:e2e:replay": "npx playwright install chromium",
     "pretest:e2e:custom": "npx playwright install chromium",

@@ -15,3 +15,14 @@ This starts:
 - `web`: the app on <http://localhost:8080>, restarted by `node --watch` when you edit a file.
 
 `flisk down` (or Ctrl+C) stops both; the volume is kept. API keys still come from `.env.example` or your own environment, exactly as upstream.
+
+## End-to-end test
+
+With the stack running (`flisk up` in one terminal), run in another:
+
+```bash
+npx playwright install chromium
+npm run test:e2e:flisk
+```
+
+It signs up a new user in a browser, logs out, logs in again and checks the account page, so it fails if MongoDB is not reachable through the Flisk setup. It generates its own password for each run. Set `FLISK_E2E_URL` to test another address.

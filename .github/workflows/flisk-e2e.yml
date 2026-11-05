@@ -19,7 +19,8 @@ env:
 
 jobs:
   flisk-e2e:
-    runs-on: ubuntu-latest
+    # ubuntu-latest (24.04) now ships Linux 6.19+, which mongo cannot start on (SERVER-121912)
+    runs-on: ubuntu-22.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7

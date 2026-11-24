@@ -33,6 +33,7 @@ function setupApp(controller) {
 describe('Contact Controller', () => {
   before(() => {
     process.env.SITE_CONTACT_EMAIL = 'test@example.com';
+    process.env.TRANSACTION_EMAIL = 'mailer@example.com';
     process.env.GOOGLE_RECAPTCHA_SITE_KEY = 'dummy';
     process.env.GOOGLE_API_KEY = 'dummy';
     process.env.GOOGLE_PROJECT_ID = 'dummy-project';
@@ -67,7 +68,7 @@ describe('Contact Controller', () => {
     // the entire process.env object. Replacing process.env loses variables set
     // by process.loadEnvFile() in other test files (e.g. BASE_URL), which
     // breaks any test that loads a module using those vars after this suite runs.
-    for (const key of ['SITE_CONTACT_EMAIL', 'GOOGLE_RECAPTCHA_SITE_KEY', 'GOOGLE_API_KEY', 'GOOGLE_PROJECT_ID']) {
+    for (const key of ['SITE_CONTACT_EMAIL', 'TRANSACTION_EMAIL', 'GOOGLE_RECAPTCHA_SITE_KEY', 'GOOGLE_API_KEY', 'GOOGLE_PROJECT_ID']) {
       if (key in OLD_ENV) {
         process.env[key] = OLD_ENV[key];
       } else {
@@ -144,6 +145,20 @@ describe('Contact Controller', () => {
           expect(sendMailStub.calledOnce).to.be.true;
           done();
         });
+    });
+
+    it('uses the configured sender and lets the recipient reply to the visitor', async () => {
+      const form = { _csrf: 'testcsrf', name: 'Test Visitor', email: 'visitor@example.net', message: 'Hello', 'g-recaptcha-response': 'token' };
+      await request(app).post('/contact').type('form').send(form).expect(302);
+
+      expect(sendMailStub.firstCall.args[0].mailOptions).to.include({
+        to: 'test@example.com',
+        from: 'mailer@example.com',
+      });
+      expect(sendMailStub.firstCall.args[0].mailOptions.replyTo).to.deep.equal({
+        name: 'Test Visitor',
+        address: 'visitor@example.net',
+      });
     });
 
     it('handles reCAPTCHA failure', (done) => {

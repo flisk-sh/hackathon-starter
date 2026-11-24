@@ -90,7 +90,8 @@ exports.postContact = async (req, res, next) => {
   const sendContactEmail = async () => {
     const mailOptions = {
       to: process.env.SITE_CONTACT_EMAIL,
-      from: `${fromName} <${fromEmail}>`,
+      from: process.env.TRANSACTION_EMAIL || process.env.SITE_CONTACT_EMAIL,
+      replyTo: { name: fromName, address: fromEmail },
       subject: 'Contact Form | Hackathon Starter',
       text: req.body.message,
     };
